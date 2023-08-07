@@ -1,12 +1,9 @@
-package main 
+package main
 
 import (
-	"log"
 	"flag"
-	"fmt"
+	"log"
 	"os"
-
-	"github.com/michlabs/gomitie/ner"
 )
 
 var modelFP string
@@ -34,5 +31,4 @@ func main() {
 		os.Exit(1)
 	}
 
-	
 }

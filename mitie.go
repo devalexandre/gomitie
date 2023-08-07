@@ -5,14 +5,14 @@ package gomitie
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "mitie.h"
+#include "/tmp/mitie/include/mitie.h"
 */
 import "C"
 import (
 	"sync"
 	"unsafe"
 
-    "github.com/michlabs/cgoutil"
+	"github.com/michlabs/cgoutil"
 )
 
 var mutex *sync.Mutex = &sync.Mutex{}
@@ -37,7 +37,7 @@ func Tokenize(text string) []string {
 	ctokens := C.mitie_tokenize(cstr)
 	defer C.mitie_free(unsafe.Pointer(ctokens))
 
-    cArrString := cgoutil.NewCStringArrayFromPointer(unsafe.Pointer(ctokens))
-    
-    return cArrString.ToSlice()
+	cArrString := cgoutil.NewCStringArrayFromPointer(unsafe.Pointer(ctokens))
+
+	return cArrString.ToSlice()
 }

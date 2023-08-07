@@ -5,14 +5,14 @@ package ner
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "mitie.h"
+#include "/tmp/mitie/include/mitie.h"
 */
 import "C"
 import (
-	"unsafe"
 	"strings"
+	"unsafe"
 
-	mitie "github.com/michlabs/gomitie"
+	mitie "github.com/devalexandre/gomitie"
 	"github.com/michlabs/cgoutil"
 )
 
@@ -98,11 +98,11 @@ func (e *Extractor) Extract(tokens []string) ([]Entity, error) {
 		mitie.Unlock()
 
 		entities[i] = Entity{
-			Tag:   Tag{
-				ID: tagID,
+			Tag: Tag{
+				ID:   tagID,
 				Name: e.tagStr(tagID),
-				},
-			Value:  strings.Join(tokens[position:position+length], " "),
+			},
+			Value: strings.Join(tokens[position:position+length], " "),
 			Score: score,
 		}
 	}

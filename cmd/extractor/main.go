@@ -2,12 +2,12 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 
-	"github.com/michlabs/gomitie"
-	"github.com/michlabs/gomitie/ner"
+	"github.com/devalexandre/gomitie"
+	"github.com/devalexandre/gomitie/ner"
 )
 
 var modelFP string
@@ -42,7 +42,7 @@ func main() {
 	log.Println("Tags: %+v", ext.Tags())
 
 	log.Println("Reading input file...")
-	txt, err := ioutil.ReadFile(inputFP)
+	txt, err := io.ReadFile(inputFP)
 	if err != nil {
 		log.Fatal(err)
 	}

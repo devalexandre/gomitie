@@ -1,18 +1,18 @@
-package ner 
+package ner
 
 /*
 #cgo LDFLAGS: -lmitie
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "mitie.h"
+#include "/tmp/mitie/include/mitie.h"
 */
 import "C"
 
 import (
 	"unsafe"
 
-	mitie "github.com/michlabs/gomitie"
+	mitie "github.com/devalexandre/gomitie"
 	"github.com/michlabs/cgoutil"
 )
 
@@ -20,8 +20,8 @@ import (
 // Call method Free() to free C underlying structure of this object
 type TrainingInstance struct {
 	trainingInstance *C.mitie_ner_training_instance
-	NumOfEntities int
-	NumOfTokens int
+	NumOfEntities    int
+	NumOfTokens      int
 }
 
 // NewTrainingInstance returns an instance of TrainingInstance and an error
@@ -38,8 +38,8 @@ func NewTrainingInstance(tokens []string) (*TrainingInstance, error) {
 
 	return &TrainingInstance{
 		trainingInstance: i,
-		NumOfTokens: strArr.Length,
-		NumOfEntities: 0,
+		NumOfTokens:      strArr.Length,
+		NumOfEntities:    0,
 	}, nil
 }
 

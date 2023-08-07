@@ -1,17 +1,17 @@
-package ner 
+package ner
 
 /*
 #cgo LDFLAGS: -lmitie
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "mitie.h"
+#include "/tmp/mitie/include/mitie.h"
 */
 import "C"
 import (
 	"unsafe"
 
-	mitie "github.com/michlabs/gomitie"
+	mitie "github.com/devalexandre/gomitie"
 )
 
 const DefaultNumOfThreads int = 1
@@ -19,7 +19,7 @@ const DefaultNumOfThreads int = 1
 // Trainer represents a MITIE NER trainer
 type Trainer struct {
 	trainer *C.mitie_ner_trainer
-	Size int
+	Size    int
 }
 
 // NewTrainer returns pointer to a new MITIE NER instance and an error
@@ -38,7 +38,7 @@ func NewTrainer(path string) (*Trainer, error) {
 
 	return &Trainer{
 		trainer: trainer,
-		Size: 0,
+		Size:    0,
 	}, nil
 }
 
@@ -55,17 +55,17 @@ func (t *Trainer) AddTrainingInstance(ins *TrainingInstance) error {
 }
 
 /*
-This parameter controls the trade-off between trying to avoid false alarms 
+This parameter controls the trade-off between trying to avoid false alarms
 but also detecting everything.
 Different values of beta have the following interpretations:
-- beta < 1 indicates that you care more about avoiding false alarms than
-  missing detections.  The smaller you make beta the more the trainer will
-  try to avoid false alarms.
-- beta == 1 indicates that you don't have a preference between avoiding
-  false alarms or not missing detections.  That is, you care about these
-  two things equally.
-- beta > 1 indicates that care more about not missing detections than
-  avoiding false alarms.
+  - beta < 1 indicates that you care more about avoiding false alarms than
+    missing detections.  The smaller you make beta the more the trainer will
+    try to avoid false alarms.
+  - beta == 1 indicates that you don't have a preference between avoiding
+    false alarms or not missing detections.  That is, you care about these
+    two things equally.
+  - beta > 1 indicates that care more about not missing detections than
+    avoiding false alarms.
 */
 func (t *Trainer) SetBeta(beta float64) {
 	mitie.Lock()
@@ -98,7 +98,7 @@ func (t *Trainer) NumOfThreads() int {
 	return int(C.mitie_ner_trainer_get_num_threads(t.trainer))
 }
 
-// Train trains with saved training instances, then returns pointer to 
+// Train trains with saved training instances, then returns pointer to
 // new the Extractor and an error object
 func (t *Trainer) Train() (*Extractor, error) {
 	if t.Size == 0 {
@@ -108,7 +108,7 @@ func (t *Trainer) Train() (*Extractor, error) {
 	mitie.Lock()
 	x := C.mitie_train_named_entity_extractor(t.trainer)
 	mitie.Unlock()
-	
+
 	if x == nil {
 		return nil, ErrTrainingFailed
 	}
